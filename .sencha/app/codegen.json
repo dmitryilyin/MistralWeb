@@ -35,6 +35,12 @@
     },
     "{controllerFileName}.js.tpl.merge": {
       "b092f4aad11d2f7eaab5ce3e2dcc2fc3134f3188": "eJxzrSjRS0lNy8xL1VCvTs7PKynKz8lJLfJLzE0tLkhMTq3VQxOtVddRqOZSAILUipLUvBQrBXVXoBmJBQV6znCF6ly1mtZcACwSIF0\u003d"
+    },
+    "{viewFileName}.js.tpl.merge": {
+      "acde5ea901286ca2f976bcddea23e159dbaa0e6f": "eJxzrSjRS0lNy8xL1VCqTiwo8EvMTa3VK8tMLderBpFgvpKOQjWXAhCkVpSk5qVYKai7ArU55+cW5Oel5pWo64AlM0pyc4BSHqk5Ofk6CuH5RTkpiorqXLWa1gDU/CBX"
+    },
+    "{modelFileName}.js.tpl.merge": {
+      "31d5356142a167c72422f7902f19df3c583f3249": "eJxlUcFugzAMvfMVVqUq0CLorlC6w7TrfgBxSMG00dKAktAxRfn3GWg7rfMhdvKeX16c99EmDbZCYcjcpWtQfvALmp7X6BOnqPYsBhcABY4WVZMBc0du8E1yYwicoXlpBcrGZFC69byf4srlgCZZICggbAdVW9Epquaz6CZ+j7bTEF65Bo2W+GUVQ8+1nXqXhsT0UtiQxSyKQdDxLqe0X1iJRHWy5xy2W/GsvNjR0FLPTC5FdRfLWJT/I5ODpB/MOXQwDSKDttyRHfvdz/VLBf6pywfBk8Cg1ZTyX8BH4Z+h3CTWfm97OT2/WC3A6vDouRtgjx9ZTDA3Zc/AuxLCUagGRygKGOtuUDaCV2AMiBYzqPw+pQsOgVtDuoGj5OoTJP072I4cNkONcEF9Qqg71UpR08i/0sGgBmwEbTYpeZwdVcH07h/XJaFF"
     }
   },
   "targets": {
@@ -334,6 +340,105 @@
         "name": "MistralWeb",
         "controllerNamespace": "MistralWeb.controller",
         "library": "all"
+      }
+    },
+    "app/controller/Workbook.js": {
+      "source": "{controllerFileName}.js.tpl.merge",
+      "version": "b092f4aad11d2f7eaab5ce3e2dcc2fc3134f3188",
+      "parameters": {
+        "appName": "MistralWeb",
+        "controllerName": "Workbook",
+        "controllerFileName": "Workbook",
+        "name": "Workbook",
+        "controllerNamespace": "MistralWeb.controller"
+      }
+    },
+    "app/controller/Execution.js": {
+      "source": "{controllerFileName}.js.tpl.merge",
+      "version": "b092f4aad11d2f7eaab5ce3e2dcc2fc3134f3188",
+      "parameters": {
+        "appName": "MistralWeb",
+        "controllerName": "Execution",
+        "controllerFileName": "Execution",
+        "name": "Execution",
+        "controllerNamespace": "MistralWeb.controller"
+      }
+    },
+    "app/controller/Task.js": {
+      "source": "{controllerFileName}.js.tpl.merge",
+      "version": "b092f4aad11d2f7eaab5ce3e2dcc2fc3134f3188",
+      "parameters": {
+        "appName": "MistralWeb",
+        "controllerName": "Task",
+        "controllerFileName": "Task",
+        "name": "Task",
+        "controllerNamespace": "MistralWeb.controller"
+      }
+    },
+    "app/view/Workbook.js": {
+      "source": "{viewFileName}.js.tpl.merge",
+      "version": "acde5ea901286ca2f976bcddea23e159dbaa0e6f",
+      "parameters": {
+        "appName": "MistralWeb",
+        "viewName": "Workbook",
+        "name": "Workbook",
+        "viewFileName": "Workbook"
+      }
+    },
+    "app/view/Execution.js": {
+      "source": "{viewFileName}.js.tpl.merge",
+      "version": "acde5ea901286ca2f976bcddea23e159dbaa0e6f",
+      "parameters": {
+        "appName": "MistralWeb",
+        "viewName": "Execution",
+        "name": "Execution",
+        "viewFileName": "Execution"
+      }
+    },
+    "app/view/Task.js": {
+      "source": "{viewFileName}.js.tpl.merge",
+      "version": "acde5ea901286ca2f976bcddea23e159dbaa0e6f",
+      "parameters": {
+        "appName": "MistralWeb",
+        "viewName": "Task",
+        "name": "Task",
+        "viewFileName": "Task"
+      }
+    },
+    "app/model/Workbook.js": {
+      "source": "{modelFileName}.js.tpl.merge",
+      "version": "31d5356142a167c72422f7902f19df3c583f3249",
+      "parameters": {
+        "appName": "MistralWeb",
+        "modelNamespace": "MistralWeb.model",
+        "baseClass": "Ext.data.Model",
+        "modelFileName": "Workbook",
+        "name": "Workbook",
+        "fields": "name:string:null,description:string:null,tags:array:null"
+      }
+    },
+    "app/model/Execution.js": {
+      "source": "{modelFileName}.js.tpl.merge",
+      "version": "31d5356142a167c72422f7902f19df3c583f3249",
+      "parameters": {
+        "appName": "MistralWeb",
+        "modelNamespace": "MistralWeb.model",
+        "baseClass": "Ext.data.Model",
+        "modelFileName": "Execution",
+        "name": "Execution",
+        "fields": "id:int:null,workbook_name:string:null,task:string:null,context:object:null,state:string:null"
+      }
+    },
+    "app/model/Task.js": {
+      "source": "{modelFileName}.js.tpl.merge",
+      "version": "31d5356142a167c72422f7902f19df3c583f3249",
+      "parameters": {
+        "appName": "MistralWeb",
+        "modelNamespace": "MistralWeb.model",
+        "baseClass": "Ext.data.Model",
+        "modelFileName": "Task",
+        "name": "Task",
+        "fields": "id:int:null,workbook_name:string:null,execution_id:string:null,name:string:null,description:string:null,action:string:null,state:string:null,tags:array:null"
       }
     }
   }
