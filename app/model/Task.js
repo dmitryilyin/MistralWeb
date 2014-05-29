@@ -10,6 +10,5 @@ Ext.define('MistralWeb.model.Task', {
         { name: 'action', type: 'string' },
         { name: 'state', type: 'string' },
         { name: 'tags', type: 'array' }
-
     ]
 });

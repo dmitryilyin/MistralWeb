@@ -4,7 +4,7 @@ Ext.define('MistralWeb.model.Workbook', {
     fields: [
         { name: 'name', type: 'string' },
         { name: 'description', type: 'string' },
-        { name: 'tags', type: 'array' }
-
+        { name: 'tags', type: 'string' }
     ]
+
 });

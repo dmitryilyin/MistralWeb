@@ -12,15 +12,20 @@ Ext.define('MistralWeb.view.Main', {
     },
 
     items: [{
-        region: 'west',
-        xtype: 'panel',
-        title: 'west',
-        width: 150
-    },{
         region: 'center',
-        xtype: 'tabpanel',
-        items:[{
-            title: 'Center Tab 1'
-        }]
+        xtype: 'execution'
+    },{
+        region: 'west',
+        xtype: 'workbook',
+        width: '50%'
+    },{
+        region: 'north',
+        xtype: 'task',
+        height: 300
+    },{
+        region: 'south',
+        xtype: 'log',
+        height: 300
     }]
+
 });

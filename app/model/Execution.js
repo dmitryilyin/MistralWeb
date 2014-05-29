@@ -7,6 +7,6 @@ Ext.define('MistralWeb.model.Execution', {
         { name: 'task', type: 'string' },
         { name: 'context', type: 'object' },
         { name: 'state', type: 'string' }
-
     ]
+
 });

@@ -440,6 +440,16 @@
         "name": "Task",
         "fields": "id:int:null,workbook_name:string:null,execution_id:string:null,name:string:null,description:string:null,action:string:null,state:string:null,tags:array:null"
       }
+    },
+    "app/view/Log.js": {
+      "source": "{viewFileName}.js.tpl.merge",
+      "version": "acde5ea901286ca2f976bcddea23e159dbaa0e6f",
+      "parameters": {
+        "appName": "MistralWeb",
+        "viewName": "Log",
+        "name": "Log",
+        "viewFileName": "Log"
+      }
     }
   }
 }

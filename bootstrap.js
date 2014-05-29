@@ -828,9 +828,20 @@ Ext.ClassManager.addNameAlternateMappings({
     "Ext.Window"
   ],
   "MistralWeb.Application": [],
+  "MistralWeb.controller.Execution": [],
   "MistralWeb.controller.Main": [],
+  "MistralWeb.controller.Task": [],
+  "MistralWeb.controller.Workbook": [],
+  "MistralWeb.model.Execution": [],
+  "MistralWeb.model.Task": [],
+  "MistralWeb.model.Workbook": [],
+  "MistralWeb.store.Workbook": [],
+  "MistralWeb.view.Execution": [],
+  "MistralWeb.view.Log": [],
   "MistralWeb.view.Main": [],
-  "MistralWeb.view.Viewport": []
+  "MistralWeb.view.Task": [],
+  "MistralWeb.view.Viewport": [],
+  "MistralWeb.view.Workbook": []
 });
 Ext.ClassManager.addNameAliasMappings({
   "Ext.AbstractComponent": [],
@@ -1818,11 +1829,30 @@ Ext.ClassManager.addNameAliasMappings({
     "widget.window"
   ],
   "MistralWeb.Application": [],
+  "MistralWeb.controller.Execution": [],
   "MistralWeb.controller.Main": [],
+  "MistralWeb.controller.Task": [],
+  "MistralWeb.controller.Workbook": [],
+  "MistralWeb.model.Execution": [],
+  "MistralWeb.model.Task": [],
+  "MistralWeb.model.Workbook": [],
+  "MistralWeb.store.Workbook": [],
+  "MistralWeb.view.Execution": [
+    "widget.execution"
+  ],
+  "MistralWeb.view.Log": [
+    "widget.log"
+  ],
   "MistralWeb.view.Main": [
     "widget.app-main"
   ],
-  "MistralWeb.view.Viewport": []
+  "MistralWeb.view.Task": [
+    "widget.task"
+  ],
+  "MistralWeb.view.Viewport": [],
+  "MistralWeb.view.Workbook": [
+    "widget.workbook"
+  ]
 });
 Ext.setVersion("ext-theme-base", "4.2.1");
 Ext.setVersion("ext-theme-classic", "4.2.1");

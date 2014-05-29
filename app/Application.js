@@ -4,14 +4,21 @@ Ext.define('MistralWeb.Application', {
     extend: 'Ext.app.Application',
 
     views: [
-        // TODO: add views here
+        'Workbook',
+        'Task',
+        'Execution',
+        'Log',
     ],
 
     controllers: [
-        // TODO: add controllers here
+        'Workbook',
+        'Task',
+        'Execution',
     ],
 
     stores: [
-        // TODO: add stores here
+        'Workbook',
+        'Task',
+        'Execution',
     ]
 });
