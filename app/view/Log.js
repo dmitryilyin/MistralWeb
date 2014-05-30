@@ -3,5 +3,5 @@ Ext.define("MistralWeb.view.Log", {
     alias: 'widget.log',
     title: 'Log',
     collapsible: true,
-    collapsed: true,
+    collapsed: true
 });

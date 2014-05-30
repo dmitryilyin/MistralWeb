@@ -835,6 +835,8 @@ Ext.ClassManager.addNameAlternateMappings({
   "MistralWeb.model.Execution": [],
   "MistralWeb.model.Task": [],
   "MistralWeb.model.Workbook": [],
+  "MistralWeb.store.Execution": [],
+  "MistralWeb.store.Task": [],
   "MistralWeb.store.Workbook": [],
   "MistralWeb.view.Execution": [],
   "MistralWeb.view.Log": [],
@@ -1836,6 +1838,8 @@ Ext.ClassManager.addNameAliasMappings({
   "MistralWeb.model.Execution": [],
   "MistralWeb.model.Task": [],
   "MistralWeb.model.Workbook": [],
+  "MistralWeb.store.Execution": [],
+  "MistralWeb.store.Task": [],
   "MistralWeb.store.Workbook": [],
   "MistralWeb.view.Execution": [
     "widget.execution"

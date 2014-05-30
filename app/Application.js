@@ -7,18 +7,18 @@ Ext.define('MistralWeb.Application', {
         'Workbook',
         'Task',
         'Execution',
-        'Log',
+        'Log'
     ],
 
     controllers: [
         'Workbook',
         'Task',
-        'Execution',
+        'Execution'
     ],
 
     stores: [
         'Workbook',
         'Task',
-        'Execution',
+        'Execution'
     ]
 });

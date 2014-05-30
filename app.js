@@ -4,10 +4,17 @@
     Sencha Cmd when upgrading.
 */
 
+Ext.Loader.setConfig({
+    enabled: true,
+    disableCaching: false
+});
+
+Ext.require('Ext.grid.plugin.CellEditing');
+
 Ext.application({
     name: 'MistralWeb',
 
     extend: 'MistralWeb.Application',
-    
+
     autoCreateViewport: true
 });

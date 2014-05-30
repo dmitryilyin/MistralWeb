@@ -10,6 +10,6 @@ Ext.define('MistralWeb.store.Execution', {
             task: 'test1',
             context: 'test1',
             state: 'RUNNING'
-        },
+        }
     ]
 });

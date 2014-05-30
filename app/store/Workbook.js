@@ -1,23 +1,27 @@
 Ext.define('MistralWeb.store.Workbook', {
     extend: 'Ext.data.Store',
     model: 'MistralWeb.model.Workbook',
-    requires: 'MistralWeb.model.Workbook',
     autoLoad: true,
-    data: [
-        {
-            name: 'test1',
-            description: 'test desc1',
-            tags: 'tst'
+    autoSync: true,
+
+    requires: [
+        'MistralWeb.model.Workbook',
+        'Ext.data.proxy.Rest'
+    ],
+
+    proxy: {
+        type: 'rest',
+        url: '/v1/workbooks/',
+        reader: {
+            type: 'json',
+            root: 'workbooks'
         },
-        {
-            name: 'test2',
-            description: 'test desc2',
-            tags: 'tst'
+        writer: {
+            type: 'json',
         },
-        {
-            name: 'test3',
-            description: 'test desc3',
-            tags: 'tst'
-        }
-    ]
+        noCache: false,
+        limitParam: undefined,
+        pageParam: undefined,
+        startParam: undefined
+    }
 });
