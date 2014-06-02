@@ -12,6 +12,12 @@ Ext.define('MistralWeb.controller.Workbook', {
             'workbook #btn_save': {
                 click: this.saveButton
             },
+            'workbook #btn_new': {
+                click: this.newButton
+            },
+            'workbook #btn_delete': {
+                click: this.deleteButton
+            },
             'workbook #grd_workbook': {
                 selectionchange: this.gridSelection
             }
@@ -19,49 +25,138 @@ Ext.define('MistralWeb.controller.Workbook', {
     },
 
     loadButton: function() {
-        console.log('load button');
+        console.debug('Load button press');
         var store = this.getWorkbookStore();
         store.reload();
-
-
-
-//        Ext.Ajax.request({
-//            url: '/task/' + name,
-//            method: 'GET',
-//            success: function (response, opts) {
-//                var obj = Ext.decode(response.responseText);
-//                var log = Ext.getCmp('log');
-//                logdata = logdata + '<br />' + 'Task: ' + name + ' Status: ' + obj.status + ' PID: ' + obj.pid;
-//                log.body.update(logdata.replace(/\n/g, '<br />'));
-//            },
-//            failure: function (response, opts) {
-//                var obj = Ext.decode(response.responseText);
-//                console.error(obj);
-//            }
-//        });
-
-
     },
 
-    saveButton: function() {
-        console.log('save button');
-    },
-
-    gridSelection: function(selectionModel,record) {
-        console.log('grid selection');
-        console.log(record);
+    gridSelection: function(selectionModel, record) {
+        console.debug('Grid selection');
 
         if (!record[0]) {
             return;
         }
 
-        var selected_name = record[0].data.name;
-        console.log(selected_name);
+        this.loadWorkbook(record[0].data.name);
+    },
+
+    getSelectedWorkbook: function() {
+        var grid = Ext.getCmp('grd_workbook');
+        if (!grid) {
+            console.error('No grid selected!');
+            return;
+        }
+        var sel_model = grid.getSelectionModel();
+        if (!sel_model) {
+            console.error('No selmodel selected!');
+            return;
+        }
+        var sel_records = sel_model.getSelection()
+        if (!sel_records) {
+            console.error('No records selected!');
+            return;
+        }
+        var name = sel_records[0].data.name;
+        if (!name) {
+            console.error('No name selected!');
+            return;
+        }
+        return name;
+    },
+
+    saveButton: function() {
+        console.debug('Save button press');
+        var name = this.getSelectedWorkbook();
+        var editor = Ext.getCmp('txt_editor');
+        var data = editor.getValue();
+        console.log('name: ' + name);
+        console.log('data: ' + data);
+
+        if ((data) && (name)) {
+          this.saveWorkbook(name, data);
+        }
+    },
+
+    newButton: function() {
+        console.debug('New button press');
+        Ext.Msg.prompt('Create Workbook', 'Workbook name:', function(btn, name){
+            if (btn == 'ok'){
+                this.createWorkbook(name);
+            }
+        },
+        this);
+    },
+
+    deleteButton: function() {
+        console.debug('Delete button press');
+        var name = this.getSelectedWorkbook();
+        if (name) {
+            this.deleteWorkbook(name);
+        }
+    },
+
+//    =====
+
+    deleteWorkbook: function(name) {
+        console.debug('Delete workbook: ' + name);
 
         Ext.Ajax.disableCaching = false;
-
         Ext.Ajax.request({
-            url: '/v1/workbooks/'+ selected_name + '/definition',
+            url: '/v1/workbooks/' + name,
+            method: 'DELETE',
+            noCache: false,
+            disableCache: false,
+            limitParam: undefined,
+            pageParam: undefined,
+            startParam: undefined,
+            success: function (response, opts) {
+                console.debug(response.responseText);
+                this.loadButton()
+            },
+            failure: function (response, opts) {
+                console.debug(response.responseText);
+                console.error('Error!', 'Failed to delete workbook!');
+            },
+            scope: this
+        });
+    },
+
+    createWorkbook: function(name) {
+        console.debug('Create workbook: ' + name);
+
+        var workbook = {
+            'name' : name,
+            'description' : '',
+            'tags' : []
+        };
+
+        Ext.Ajax.disableCaching = false;
+        Ext.Ajax.request({
+            url: '/v1/workbooks',
+            method: 'POST',
+            noCache: false,
+            disableCache: false,
+            limitParam: undefined,
+            pageParam: undefined,
+            startParam: undefined,
+            jsonData: Ext.encode(workbook),
+            success: function (response, opts) {
+                console.debug(response.responseText);
+                this.loadButton()
+            },
+            failure: function (response, opts) {
+                console.debug(response.responseText);
+                console.error('Error!', 'Failed to create workbook!');
+            },
+            scope: this
+        });
+    },
+
+    loadWorkbook: function(name) {
+        console.debug('Load workbook: ' + name);
+        Ext.Ajax.disableCaching = false;
+        Ext.Ajax.request({
+            url: '/v1/workbooks/'+ name + '/definition',
             method: 'GET',
             noCache: false,
             disableCache: false,
@@ -69,17 +164,42 @@ Ext.define('MistralWeb.controller.Workbook', {
             pageParam: undefined,
             startParam: undefined,
             success: function (response, opts) {
-                var editor = Ext.getCmp('#txt_editor');
-                console.log(response.responseText);
-                console.log(editor);
+                var editor = Ext.getCmp('txt_editor');
+                console.debug(response.responseText);
+                if (editor) {
+                    editor.setValue(response.responseText);
+                }
             },
             failure: function (response, opts) {
-                var obj = Ext.decode(response.responseText);
-                console.error(obj);
+                console.debug(response.responseText);
+                console.error('Error!', 'Failed to load workbook definition!');
             }
-        })
+        });
+    },
 
+    saveWorkbook: function(name, data) {
+        Ext.Ajax.disableCaching = false;
+        Ext.Ajax.request({
+            url: '/v1/workbooks/'+ name + '/definition',
+            method: 'PUT',
+            noCache: false,
+            disableCache: false,
+            limitParam: undefined,
+            pageParam: undefined,
+            startParam: undefined,
+            headers: {
+                'Content-Type': 'text/plain'
+            },
+            params: data,
+            success: function (response, opts) {
+                console.debug(response.responseText);
+                console.info('Workbook saved!');
+            },
+            failure: function (response, opts) {
+                console.debug(response.responseText);
+                Ext.Msg.alert('Error!', response.responseText);
+            }
+        });
     }
-
 
 });

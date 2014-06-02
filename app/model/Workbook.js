@@ -9,11 +9,11 @@ Ext.define('MistralWeb.model.Workbook', {
         {
             name: 'description',
             type: 'string'
-        },
-        {
-            name: 'tags',
-            type: 'string'
         }
+//        {
+//            name: 'tags',
+//            type: 'string'
+//        }
     ]
 
 });

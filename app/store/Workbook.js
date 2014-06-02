@@ -24,4 +24,5 @@ Ext.define('MistralWeb.store.Workbook', {
         pageParam: undefined,
         startParam: undefined
     }
+
 });

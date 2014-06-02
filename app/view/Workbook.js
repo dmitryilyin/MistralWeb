@@ -7,7 +7,8 @@ Ext.define("MistralWeb.view.Workbook", {
     requires: [
         'Ext.grid.Panel',
         'Ext.form.field.TextArea',
-        'Ext.grid.plugin.CellEditing'
+        'Ext.grid.plugin.CellEditing',
+        'Ext.window.MessageBox'
     ],
 
     items: [
@@ -26,17 +27,19 @@ Ext.define("MistralWeb.view.Workbook", {
                     {
                         text: 'Name',
                         dataIndex: 'name',
+                        flex: 1
                     },
                     {
                         text: 'Description',
                         dataIndex: 'description',
-                        editor: 'textfield'
-                    },
-                    {
-                        text: 'Tags',
-                        dataIndex: 'tags',
-                        editor: 'textfield'
+                        editor: 'textfield',
+                        flex: 2
                     }
+//                    {
+//                        text: 'Tags',
+//                        dataIndex: 'tags',
+//                        editor: 'textfield'
+//                    }
                 ]
             },
             selType: 'cellmodel',
@@ -50,7 +53,8 @@ Ext.define("MistralWeb.view.Workbook", {
             region: 'center',
             xtype: 'textareafield',
             id: 'txt_editor',
-            anchor: '100%'
+            anchor: '100%',
+            fieldStyle: "font-family: 'Lucida Console', Monaco, monospace; font-size: 2em"
         },
         {
             region: 'south',
@@ -70,6 +74,22 @@ Ext.define("MistralWeb.view.Workbook", {
                     xtype: 'button',
                     text: 'Save',
                     id: 'btn_save',
+                    height: 30,
+                    width: 100,
+                    margin: '3px'
+                },
+                {
+                    xtype: 'button',
+                    text: 'New',
+                    id: 'btn_new',
+                    height: 30,
+                    width: 100,
+                    margin: '3px'
+                },
+                {
+                    xtype: 'button',
+                    text: 'Delete',
+                    id: 'btn_delete',
                     height: 30,
                     width: 100,
                     margin: '3px'
