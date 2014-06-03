@@ -29,7 +29,16 @@ Ext.define("MistralWeb.view.Execution", {
             items: [
                 {
                     xtype: 'button',
+                    text: 'Load',
+                    id: 'btn_execution_load',
+                    height: 30,
+                    width: 100,
+                    margin: '3px'
+                },
+                {
+                    xtype: 'button',
                     text: 'Run execution',
+                    id: 'btn_execution_run',
                     height: 30,
                     width: 100,
                     margin: '3px'
@@ -37,6 +46,7 @@ Ext.define("MistralWeb.view.Execution", {
                 {
                     xtype: 'textfield',
                     name: 'Target',
+                    id: 'txt_execution_target',
                     margin: '3px',
                     width: 150,
                     emptyText: 'Target'
@@ -44,6 +54,7 @@ Ext.define("MistralWeb.view.Execution", {
                 {
                     xtype: 'textfield',
                     name: 'Target',
+                    id: 'txt_execution_condition',
                     margin: '3px',
                     width: 300,
                     emptyText: 'Condition'

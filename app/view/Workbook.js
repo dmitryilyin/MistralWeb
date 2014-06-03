@@ -42,11 +42,12 @@ Ext.define("MistralWeb.view.Workbook", {
 //                    }
                 ]
             },
-            selType: 'cellmodel',
+            selType: 'rowmodel',
             plugins: [
-                Ext.create('Ext.grid.plugin.CellEditing', {
+                {
+                    ptype : 'cellediting',
                     clicksToEdit: 2
-                })
+                }
             ]
         },
         {
