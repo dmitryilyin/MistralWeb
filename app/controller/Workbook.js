@@ -115,7 +115,7 @@ Ext.define('MistralWeb.controller.Workbook', {
             },
             failure: function (response, opts) {
                 console.debug(response.responseText);
-                console.error('Error!', 'Failed to delete workbook!');
+                Ext.Msg.alert('Error!', response.responseText);
             },
             scope: this
         });
@@ -146,7 +146,7 @@ Ext.define('MistralWeb.controller.Workbook', {
             },
             failure: function (response, opts) {
                 console.debug(response.responseText);
-                console.error('Error!', 'Failed to create workbook!');
+                Ext.Msg.alert('Error!', response.responseText);
             },
             scope: this
         });
@@ -172,7 +172,7 @@ Ext.define('MistralWeb.controller.Workbook', {
             },
             failure: function (response, opts) {
                 console.debug(response.responseText);
-                console.error('Error!', 'Failed to load workbook definition!');
+                Ext.Msg.alert('Error!', response.responseText);
             }
         });
     },

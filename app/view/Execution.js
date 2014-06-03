@@ -8,16 +8,33 @@ Ext.define("MistralWeb.view.Execution", {
             region: 'center',
             xtype: 'grid',
             store: 'Execution',
+            id: 'grd_execution',
             columns: {
                 defaults: {
                     flex: 1
                 },
                 items: [
-                    { header: 'ID', dataIndex: 'id' },
-                    { text: 'Workbook', dataIndex: 'workbook_name' },
-                    { text: 'Task', dataIndex: 'task' },
-                    { text: 'Context', dataIndex: 'context' },
-                    { text: 'State', dataIndex: 'state' }
+                    {
+                        header: 'ID',
+                        dataIndex: 'id',
+                        flex: 2
+                    },
+                    {
+                        text: 'Workbook',
+                        dataIndex: 'workbook_name'
+                    },
+                    {
+                        text: 'Task',
+                        dataIndex: 'task'
+                    },
+                    {
+                        text: 'Context',
+                        dataIndex: 'context'
+                    },
+                    {
+                        text: 'State',
+                        dataIndex: 'state'
+                    }
                 ]
             }
         },
@@ -58,7 +75,15 @@ Ext.define("MistralWeb.view.Execution", {
                     margin: '3px',
                     width: 300,
                     emptyText: 'Condition'
-                }
+                },
+                {
+                    xtype: 'button',
+                    text: 'Stop execution',
+                    id: 'btn_execution_stop',
+                    height: 30,
+                    width: 100,
+                    margin: '3px'
+                },
             ]
         }
     ]

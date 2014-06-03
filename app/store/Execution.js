@@ -1,15 +1,38 @@
 Ext.define('MistralWeb.store.Execution', {
     extend: 'Ext.data.Store',
     model: 'MistralWeb.model.Execution',
-    requires: 'MistralWeb.model.Execution',
-    autoLoad: true,
-    data: [
-        {
-            id: 1,
-            workbook_name: 'test1',
-            task: 'test1',
-            context: 'test1',
-            state: 'RUNNING'
-        }
-    ]
+
+    autoLoad: false,
+    autoSync: false,
+
+    setWorkbook: function(workbook) {
+        this.workbook = workbook;
+        this.getProxy().url = '/v1/workbooks/' + workbook + '/executions';
+    },
+
+    getWorkbook: function() {
+        return this.workbook;
+    },
+
+    requires: [
+        'MistralWeb.model.Execution',
+        'Ext.data.proxy.Rest'
+    ],
+
+    proxy: {
+        type: 'rest',
+        url: null,
+        reader: {
+            type: 'json',
+            root: 'executions'
+        },
+//        writer: {
+//            type: 'json'
+//        },
+        noCache: false,
+        limitParam: undefined,
+        pageParam: undefined,
+        startParam: undefined,
+        scope: this,
+    }
 });
