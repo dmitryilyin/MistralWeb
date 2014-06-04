@@ -22,38 +22,76 @@ Ext.define('MistralWeb.controller.Execution', {
             'execution #btn_execution_set_running': {
                 click: function() {
                     var that = this;
-                    that.executionSetStatus('RUNNING')
+                    that.executionSetStatusButton('RUNNING')
                 }
             },
             'execution #btn_execution_set_suspended': {
                 click: function() {
                     var that = this;
-                    that.executionSetStatus('SUSPENDED')
+                    that.executionSetStatusButton('SUSPENDED')
                 }
             },
             'execution #brn_execution_set_stopped': {
                 click: function() {
                     var that = this;
-                    that.executionSetStatus('STOPPED')
+                    that.executionSetStatusButton('STOPPED')
                 }
             },
             'execution #btn_execution_set_success': {
                 click: function() {
                     var that = this;
-                    that.executionSetStatus('SUCCESS')
+                    that.executionSetStatusButton('SUCCESS')
                 }
             },
             'execution #btn_execution_set_error': {
                 click: function() {
                     var that = this;
-                    that.executionSetStatus('ERROR')
+                    that.executionSetStatusButton('ERROR')
                 }
             }
         });
     },
 
-    executionSetStatus: function(status) {
-        console.log('Set execution status: ' + status);
+    executionSetStatusButton: function(execution_status) {
+      console.debug('Execution Set Status press');
+      var workbook_name = this.getSelectedWorkbook();
+      var execution_id = this.getSelectedExecution();
+      if ((workbook_name) && (execution_id) && (execution_status)) {
+          this.executionSetStatus(workbook_name, execution_id, execution_status);
+      }
+    },
+
+    executionSetStatus: function(workbook_name, execution_id, execution_status) {
+        console.debug('Set execution status: workbook: ' + workbook_name + ' execution_id: ' + execution_id + ' status: ' + execution_status);
+
+        Ext.Ajax.disableCaching = false;
+
+        var execution = {
+            'state' : execution_status,
+            'id' : execution_id
+        };
+
+        Ext.Ajax.request({
+            url: '/v1/workbooks/' + workbook_name + '/executions/' + execution_id,
+            method: 'PUT',
+            noCache: false,
+            disableCache: false,
+            limitParam: undefined,
+            pageParam: undefined,
+            startParam: undefined,
+            jsonData: Ext.encode(execution),
+            success: function (response, opts) {
+                var that = this;
+                console.debug(response.responseText);
+                that.executionLoad(workbook_name);
+            },
+            failure: function (response, opts) {
+                console.debug(response.responseText);
+                Ext.Msg.alert('Error!', response.responseText);
+            },
+            scope: this
+        });
+
     },
 
     executionLoadButton: function() {
@@ -76,8 +114,8 @@ Ext.define('MistralWeb.controller.Execution', {
         if (!target_task) {
             return;
         }
-        var txt_execution_condition = Ext.getCmp('txt_execution_condition');
-        var context = txt_execution_condition.getValue();
+        var txt_execution_context = Ext.getCmp('txt_execution_context');
+        var context = txt_execution_context.getValue();
         this.executionRun(workbook_name, target_task, context);
     },
 
@@ -111,22 +149,18 @@ Ext.define('MistralWeb.controller.Execution', {
     getSelectedExecution: function() {
         var grid = Ext.getCmp('grd_execution');
         if (!grid) {
-            console.error('No grid selected!');
             return null;
         }
         var sel_model = grid.getSelectionModel();
         if (!sel_model) {
-            console.error('No selmodel selected!');
             return null;
         }
         var sel_records = sel_model.getSelection();
-        if ((!sel_records) && (sel_records.length > 0)) {
-            console.error('No records selected!');
+        if ((!sel_records) || (sel_records.length == 0)) {
             return null;
         }
         var name = sel_records[0].data.id;
         if (!name) {
-            console.error('No name selected!');
             return null;
         }
         return name;
@@ -141,7 +175,7 @@ Ext.define('MistralWeb.controller.Execution', {
         console.debug('Delete execution: ' + execution_id + ' of ' + workbook_name);
         Ext.Ajax.disableCaching = false;
         Ext.Ajax.request({
-            url: '/v1/workbooks/test/executions/' + execution_id,
+            url: '/v1/workbooks/' + workbook_name + '/executions/' + execution_id,
             method: 'DELETE',
             noCache: false,
             disableCache: false,

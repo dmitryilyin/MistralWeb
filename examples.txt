@@ -1,0 +1,48 @@
+One Task with REST
+==================
+
+Namespaces:
+  Rest:
+    class: std.mistral_http
+    actions:
+      test1:
+        base-parameters:
+          url: http://localhost:8988/tasks/test1
+
+Workflow:
+  tasks:
+    test1:
+      action: Rest.test1
+
+3 Depending Tasks
+=================
+
+Namespaces:
+  Rest:
+    class: std.mistral_http
+    actions:
+      test1:
+        base-parameters:
+          url: http://localhost:8988/tasks/test1
+
+      test2:
+        base-parameters:
+          url: http://localhost:8988/tasks/test2
+
+      test3:
+        base-parameters:
+          url: http://localhost:8988/tasks/test3
+
+Workflow:
+  tasks:
+    test1:
+      action: Rest.test1
+
+    test2:
+      requires: [test1]
+      action: Rest.test2
+
+    test3:
+      requires: [test2]
+      action: Rest.test3
+

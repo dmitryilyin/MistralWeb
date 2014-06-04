@@ -44,22 +44,18 @@ Ext.define('MistralWeb.controller.Workbook', {
     getSelectedWorkbook: function() {
         var grid = Ext.getCmp('grd_workbook');
         if (!grid) {
-            console.error('No grid selected!');
             return null;
         }
         var sel_model = grid.getSelectionModel();
         if (!sel_model) {
-            console.error('No selmodel selected!');
             return null;
         }
         var sel_records = sel_model.getSelection();
-        if (!sel_records) {
-            console.error('No records selected!');
+        if ((!sel_records) || (sel_records.length == 0)) {
             return null;
         }
         var name = sel_records[0].data.name;
         if (!name) {
-            console.error('No name selected!');
             return null;
         }
         return name;
@@ -70,8 +66,6 @@ Ext.define('MistralWeb.controller.Workbook', {
         var name = this.getSelectedWorkbook();
         var editor = Ext.getCmp('txt_editor');
         var data = editor.getValue();
-        console.log('name: ' + name);
-        console.log('data: ' + data);
 
         if ((data) && (name)) {
           this.saveWorkbook(name, data);

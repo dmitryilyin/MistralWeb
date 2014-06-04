@@ -7,6 +7,7 @@ Ext.define("MistralWeb.view.Task", {
         {
           region: 'center',
           xtype: 'grid',
+          id: 'grd_task',
           store: 'Task',
           columns: {
               defaults: {

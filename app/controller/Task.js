@@ -12,42 +12,101 @@ Ext.define('MistralWeb.controller.Task', {
             'task #btn_task_set_idle': {
                 click: function() {
                     var that = this;
-                    that.taskSetStatus('IDLE');
+                    that.taskSetStatusButton('IDLE');
                 }
             },
             'task #btn_task_set_running': {
                 click: function() {
                     var that = this;
-                    that.taskSetStatus('RUNNING');
+                    that.taskSetStatusButton('RUNNING');
                 }
             },
             'task #btn_task_set_success': {
                 click: function() {
                     var that = this;
-                    that.taskSetStatus('SUCCESS');
+                    that.taskSetStatusButton('SUCCESS');
                 }
             },
             'task #btn_task_set_error': {
                 click: function() {
                     var that = this;
-                    that.taskSetStatus('ERROR');
+                    that.taskSetStatusButton('ERROR');
                 }
             }
         });
     },
 
-    taskSetStatus: function(status) {
-        console.log('Set task status: ' + status);
+    taskSetStatusButton: function(task_status) {
+      console.debug('Task Set Status press');
+      var workbook_name = this.getSelectedWorkbook();
+      var execution_id = this.getSelectedExecution();
+      var task_id = this.getSelectedTask();
+      if ((workbook_name) && (execution_id) && (task_id)) {
+        this.taskSetStatus(workbook_name, execution_id, task_id, task_status);
+      }
+    },
+
+    getSelectedTask: function() {
+        var grid = Ext.getCmp('grd_task');
+        if (!grid) {
+            return null;
+        }
+        var sel_model = grid.getSelectionModel();
+        if (!sel_model) {
+            return null;
+        }
+        var sel_records = sel_model.getSelection();
+        if ((!sel_records) || (sel_records.length == 0)) {
+            return null;
+        }
+        var name = sel_records[0].data.id;
+        if (!name) {
+            return null;
+        }
+        return name;
+    },
+
+    taskSetStatus: function(workbook_name, execution_id, task_id, task_status) {
+        console.debug('Set task status: workbook: ' + workbook_name + ' execution_id: ' + execution_id + ' status: ' + task_status);
+
+        Ext.Ajax.disableCaching = false;
+
+        var task = {
+            'state' : task_status,
+            'id' : task_id,
+            'execution_id' : execution_id,
+            'workbook_name' : workbook_name
+        };
+
+        Ext.Ajax.request({
+            url: '/v1/workbooks/' + workbook_name + '/executions/' + execution_id + '/tasks/' + task_id,
+            method: 'PUT',
+            noCache: false,
+            disableCache: false,
+            limitParam: undefined,
+            pageParam: undefined,
+            startParam: undefined,
+            jsonData: Ext.encode(task),
+            success: function (response, opts) {
+                var that = this;
+                console.debug(response.responseText);
+                that.taskLoad(workbook_name, execution_id);
+            },
+            failure: function (response, opts) {
+                console.debug(response.responseText);
+                Ext.Msg.alert('Error!', response.responseText);
+            },
+            scope: this
+        });
+
     },
 
     taskLoadButton: function() {
-        console.log('Task Load press');
+        console.debug('Task Load press');
         var workbook_name = this.getSelectedWorkbook();
-        console.log(workbook_name);
         var execution_id = this.getSelectedExecution();
-        console.log(execution_id);
         if ((workbook_name) && (execution_id)) {
-            this.loadTasks(workbook_name, execution_id);
+            this.taskLoad(workbook_name, execution_id);
         }
     },
 
@@ -61,10 +120,9 @@ Ext.define('MistralWeb.controller.Task', {
         return execution_controller.getSelectedExecution();
     },
 
-    loadTasks: function(workbook_name, execution_id) {
+    taskLoad: function(workbook_name, execution_id) {
         console.debug('Load tasks: workbook: ' + workbook_name + ' execution_id: ' + execution_id);
         var store = this.getTaskStore();
-        console.log(store);
         store.setExecution(workbook_name, execution_id);
         store.reload();
     }

@@ -56,7 +56,7 @@ Ext.define("MistralWeb.view.Workbook", {
             id: 'txt_editor',
             anchor: '100%',
             collapsible: false,
-            fieldStyle: "font-family: 'Lucida Console', Monaco, monospace; font-size: 2em"
+            fieldStyle: "font-family: 'Lucida Console', Monaco, monospace; font-size: 1.5em"
         },
         {
             region: 'south',
@@ -97,6 +97,29 @@ Ext.define("MistralWeb.view.Workbook", {
                     margin: '3px'
                 }
             ]
+        },
+        {
+            region: 'west',
+            xtype: 'panel',
+            title: 'Examples',
+            width: '50%',
+            split: true,
+            collapsible: true,
+            collapsed: true,
+            autoScroll: true,
+            loader: {
+                autoLoad:true,
+                url :'/examples.txt',
+                renderer: function(loader, response, active){
+                    var success = true;
+                    try {
+                        loader.getTarget().update('<pre style="padding: 3px">' + response.responseText + '</pre>');
+                    } catch (e) {
+                        success = false;
+                    }
+                    return success;
+                }
+            }
         }
     ]
 });

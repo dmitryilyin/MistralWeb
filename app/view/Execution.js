@@ -72,11 +72,11 @@ Ext.define("MistralWeb.view.Execution", {
                 {
                     xtype: 'textfield',
                     name: 'Target',
-                    id: 'txt_execution_condition',
-                    height: 20,
-                    margin: '8px',
+                    id: 'txt_execution_context',
+                    height: 25,
+                    margin: '3px',
                     width: 200,
-                    emptyText: 'Condition'
+                    emptyText: "Context (example: {'name' : 'test'})"
                 },
                 {
                     xtype: 'button',
