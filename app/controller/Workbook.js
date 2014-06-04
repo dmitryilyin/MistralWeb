@@ -38,28 +38,29 @@ Ext.define('MistralWeb.controller.Workbook', {
         }
 
         this.loadWorkbook(record[0].data.name);
+        this.reloadExecution();
     },
 
     getSelectedWorkbook: function() {
         var grid = Ext.getCmp('grd_workbook');
         if (!grid) {
             console.error('No grid selected!');
-            return;
+            return null;
         }
         var sel_model = grid.getSelectionModel();
         if (!sel_model) {
             console.error('No selmodel selected!');
-            return;
+            return null;
         }
-        var sel_records = sel_model.getSelection()
+        var sel_records = sel_model.getSelection();
         if (!sel_records) {
             console.error('No records selected!');
-            return;
+            return null;
         }
         var name = sel_records[0].data.name;
         if (!name) {
             console.error('No name selected!');
-            return;
+            return null;
         }
         return name;
     },
@@ -89,9 +90,16 @@ Ext.define('MistralWeb.controller.Workbook', {
 
     deleteButton: function() {
         console.debug('Delete button press');
-        var name = this.getSelectedWorkbook();
-        if (name) {
-            this.deleteWorkbook(name);
+        var workbook_name = this.getSelectedWorkbook();
+        if (workbook_name) {
+            Ext.Msg.confirm('Delete Workbook', 'Are you sure you want to delete workbook "' + workbook_name + '"?',
+                function(btn){
+                    if (btn == 'yes'){
+                        this.deleteWorkbook(workbook_name);
+                    }
+                },
+                this
+            );
         }
     },
 
@@ -110,8 +118,9 @@ Ext.define('MistralWeb.controller.Workbook', {
             pageParam: undefined,
             startParam: undefined,
             success: function (response, opts) {
+                var that = this;
                 console.debug(response.responseText);
-                this.loadButton()
+                that.loadButton()
             },
             failure: function (response, opts) {
                 console.debug(response.responseText);
@@ -141,8 +150,9 @@ Ext.define('MistralWeb.controller.Workbook', {
             startParam: undefined,
             jsonData: Ext.encode(workbook),
             success: function (response, opts) {
+                var that = this;
                 console.debug(response.responseText);
-                this.loadButton()
+                that.loadButton()
             },
             failure: function (response, opts) {
                 console.debug(response.responseText);
@@ -173,8 +183,16 @@ Ext.define('MistralWeb.controller.Workbook', {
             failure: function (response, opts) {
                 console.debug(response.responseText);
                 Ext.Msg.alert('Error!', response.responseText);
-            }
+            },
+            scope: this
         });
+    },
+
+    reloadExecution: function() {
+        var execution_controller = this.getController('Execution');
+        if (execution_controller) {
+                execution_controller.executionLoadButton();
+        }
     },
 
     saveWorkbook: function(name, data) {

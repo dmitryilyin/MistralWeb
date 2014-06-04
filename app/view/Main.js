@@ -1,30 +1,32 @@
 Ext.define('MistralWeb.view.Main', {
     extend: 'Ext.container.Container',
     requires:[
-        'Ext.tab.Panel',
         'Ext.layout.container.Border'
     ],
-    
+
     xtype: 'app-main',
+
+    defaults: {
+        collapsible: true,
+        collapsed: false,
+        split: true
+    },
 
     layout: {
         type: 'border'
     },
 
     items: [{
-        region: 'center',
-        xtype: 'execution'
-    },{
-        region: 'west',
-        xtype: 'workbook',
+        region: 'east',
+        xtype: 'execution',
         width: '50%'
     },{
-        region: 'north',
-        xtype: 'task',
-        height: 300
+        region: 'center',
+        xtype: 'workbook',
+        collapsible: false,
     },{
         region: 'south',
-        xtype: 'log',
+        xtype: 'task',
         height: 300
     }]
 

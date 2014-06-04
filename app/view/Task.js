@@ -20,35 +20,61 @@ Ext.define("MistralWeb.view.Task", {
                   { text: 'Description', dataIndex: 'description' },
                   { text: 'Action', dataIndex: 'action' },
                   { text: 'State', dataIndex: 'state' },
-                  { text: 'Tags', dataIndex: 'tags' }
               ]
           }
         },{
             region: 'east',
             xtype: 'panel',
-            wifth: 150,
+            collapsible: true,
+            collapsed: true,
+            width: 100,
+            title: 'Set status',
             layout: 'vbox',
             items: [
                 {
                     xtype: 'button',
-                    text: 'Refresh',
+                    text: 'IDLE',
+                    id: 'btn_task_set_idle',
                     margin: '3px',
                     height: 30
                 },
                 {
                     xtype: 'button',
-                    text: 'Set OK',
+                    text: 'RUNNING',
+                    id: 'btn_task_set_running',
                     margin: '3px',
                     height: 30
                 },
                 {
                     xtype: 'button',
-                    text: 'Set Fail',
+                    text: 'SUCCESS',
+                    id: 'btn_task_set_success',
                     margin: '3px',
                     height: 30
-                }
+                },
+                {
+                    xtype: 'button',
+                    text: 'ERROR',
+                    id: 'btn_task_set_error',
+                    margin: '3px',
+                    height: 30
+                },
             ]
 
+        },{
+            xtype: 'panel',
+            region: 'south',
+            layout: 'vbox',
+            items: [
+                {
+                    xtype: 'button',
+                    text: 'Load',
+                    id: 'btn_task_load',
+                    margin: '3px',
+                    height: 30,
+                    width: 100
+                }
+            ]
         }
     ]
 });

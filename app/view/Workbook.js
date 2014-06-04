@@ -11,6 +11,11 @@ Ext.define("MistralWeb.view.Workbook", {
         'Ext.window.MessageBox'
     ],
 
+    defaults: {
+      split: false,
+      collapsible: false
+    },
+
     items: [
         {
             region: 'north',
@@ -35,11 +40,6 @@ Ext.define("MistralWeb.view.Workbook", {
                         editor: 'textfield',
                         flex: 2
                     }
-//                    {
-//                        text: 'Tags',
-//                        dataIndex: 'tags',
-//                        editor: 'textfield'
-//                    }
                 ]
             },
             selType: 'rowmodel',
@@ -55,6 +55,7 @@ Ext.define("MistralWeb.view.Workbook", {
             xtype: 'textareafield',
             id: 'txt_editor',
             anchor: '100%',
+            collapsible: false,
             fieldStyle: "font-family: 'Lucida Console', Monaco, monospace; font-size: 2em"
         },
         {

@@ -64,7 +64,8 @@ Ext.define("MistralWeb.view.Execution", {
                     xtype: 'textfield',
                     name: 'Target',
                     id: 'txt_execution_target',
-                    margin: '3px',
+                    margin: '8px',
+                    height: 20,
                     width: 150,
                     emptyText: 'Target'
                 },
@@ -72,8 +73,9 @@ Ext.define("MistralWeb.view.Execution", {
                     xtype: 'textfield',
                     name: 'Target',
                     id: 'txt_execution_condition',
-                    margin: '3px',
-                    width: 300,
+                    height: 20,
+                    margin: '8px',
+                    width: 200,
                     emptyText: 'Condition'
                 },
                 {
@@ -83,6 +85,53 @@ Ext.define("MistralWeb.view.Execution", {
                     height: 30,
                     width: 100,
                     margin: '3px'
+                },
+            ]
+        },
+        {
+            region: 'east',
+            xtype: 'panel',
+            layout: 'vbox',
+            collapsible: true,
+            collapsed: true,
+            split: true,
+            width: 100,
+            title: 'Set status',
+            items: [
+                {
+                    xtype: 'button',
+                    text: 'RUNNING',
+                    id: 'btn_execution_set_running',
+                    margin: '3px',
+                    height: 30
+                },
+                {
+                    xtype: 'button',
+                    text: 'SUSPENDED',
+                    id: 'btn_execution_set_suspended',
+                    margin: '3px',
+                    height: 30
+                },
+                {
+                    xtype: 'button',
+                    text: 'STOPPED',
+                    id: 'brn_execution_set_stopped',
+                    margin: '3px',
+                    height: 30
+                },
+                {
+                    xtype: 'button',
+                    text: 'SUCCESS',
+                    id: 'btn_execution_set_success',
+                    margin: '3px',
+                    height: 30
+                },
+                {
+                    xtype: 'button',
+                    text: 'ERROR',
+                    id: 'btn_execution_set_error',
+                    margin: '3px',
+                    height: 30
                 },
             ]
         }

@@ -14,8 +14,46 @@ Ext.define('MistralWeb.controller.Execution', {
             },
             'execution #btn_execution_stop': {
                 click: this.executionStopButton
+            },
+            'execution #grd_execution': {
+                selectionchange: this.reloadTask
+            },
+
+            'execution #btn_execution_set_running': {
+                click: function() {
+                    var that = this;
+                    that.executionSetStatus('RUNNING')
+                }
+            },
+            'execution #btn_execution_set_suspended': {
+                click: function() {
+                    var that = this;
+                    that.executionSetStatus('SUSPENDED')
+                }
+            },
+            'execution #brn_execution_set_stopped': {
+                click: function() {
+                    var that = this;
+                    that.executionSetStatus('STOPPED')
+                }
+            },
+            'execution #btn_execution_set_success': {
+                click: function() {
+                    var that = this;
+                    that.executionSetStatus('SUCCESS')
+                }
+            },
+            'execution #btn_execution_set_error': {
+                click: function() {
+                    var that = this;
+                    that.executionSetStatus('ERROR')
+                }
             }
         });
+    },
+
+    executionSetStatus: function(status) {
+        console.log('Set execution status: ' + status);
     },
 
     executionLoadButton: function() {
@@ -50,32 +88,46 @@ Ext.define('MistralWeb.controller.Execution', {
             return;
         }
         var execution_id = this.getSelectedExecution();
-        if (!execution_id) {
-            return;
+        if (execution_id) {
+            Ext.Msg.confirm('Stop Execution', 'Are you sure you want to stop execution "' + execution_id + '" of workbook "' + workbook_name + '"?',
+                function(btn){
+                    if (btn == 'yes'){
+                        this.executionStop(workbook_name, execution_id);
+                    }
+                },
+                this
+            );
         }
-        this.executionStop(workbook_name, execution_id);
+
+    },
+
+    reloadTask: function() {
+        var task_controller = this.getController('Task');
+        if (task_controller) {
+            task_controller.taskLoadButton();
+        }
     },
 
     getSelectedExecution: function() {
         var grid = Ext.getCmp('grd_execution');
         if (!grid) {
             console.error('No grid selected!');
-            return;
+            return null;
         }
         var sel_model = grid.getSelectionModel();
         if (!sel_model) {
             console.error('No selmodel selected!');
-            return;
+            return null;
         }
-        var sel_records = sel_model.getSelection()
-        if (!sel_records) {
+        var sel_records = sel_model.getSelection();
+        if ((!sel_records) && (sel_records.length > 0)) {
             console.error('No records selected!');
-            return;
+            return null;
         }
         var name = sel_records[0].data.id;
         if (!name) {
             console.error('No name selected!');
-            return;
+            return null;
         }
         return name;
     },
@@ -97,8 +149,9 @@ Ext.define('MistralWeb.controller.Execution', {
             pageParam: undefined,
             startParam: undefined,
             success: function (response, opts) {
+                var that = this;
                 console.debug(response.responseText);
-                this.executionLoad(workbook_name);
+                that.executionLoad(workbook_name);
             },
             failure: function (response, opts) {
                 console.debug(response.responseText);
@@ -139,11 +192,12 @@ Ext.define('MistralWeb.controller.Execution', {
             pageParam: undefined,
             startParam: undefined,
             jsonData: Ext.encode(execution),
-            success: function (response, opts) {
+            success: function (response) {
+                var that = this;
                 console.debug(response.responseText);
-                this.getExecutionStore().reload();
+                that.executionLoad(workbook_name);
             },
-            failure: function (response, opts) {
+            failure: function (response) {
                 console.debug(response.responseText);
                 Ext.Msg.alert('Error!', response.responseText);
             },

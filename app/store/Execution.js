@@ -5,13 +5,9 @@ Ext.define('MistralWeb.store.Execution', {
     autoLoad: false,
     autoSync: false,
 
-    setWorkbook: function(workbook) {
-        this.workbook = workbook;
-        this.getProxy().url = '/v1/workbooks/' + workbook + '/executions';
-    },
-
-    getWorkbook: function() {
-        return this.workbook;
+    setWorkbook: function(workbook_name) {
+        this.workbook = workbook_name;
+        this.getProxy().url = '/v1/workbooks/' + workbook_name + '/executions';
     },
 
     requires: [
@@ -26,13 +22,10 @@ Ext.define('MistralWeb.store.Execution', {
             type: 'json',
             root: 'executions'
         },
-//        writer: {
-//            type: 'json'
-//        },
         noCache: false,
         limitParam: undefined,
         pageParam: undefined,
         startParam: undefined,
-        scope: this,
+        scope: this
     }
 });
