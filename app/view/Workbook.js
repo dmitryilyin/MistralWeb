@@ -56,7 +56,22 @@ Ext.define("MistralWeb.view.Workbook", {
             id: 'txt_editor',
             anchor: '100%',
             collapsible: false,
-            fieldStyle: "font-family: 'Lucida Console', Monaco, monospace; font-size: 1.5em"
+            fieldStyle: "font-family: 'Lucida Console', Monaco, monospace; font-size: 1.5em",
+            enableKeyEvents: true,
+            listeners : {
+                specialkey : function(textfield, e) {
+                    if (e.keyCode == 9) {
+                        var text_area = document.getElementById('txt_editor-inputEl');
+                        if (text_area) {
+                            var startPos = text_area.selectionStart;
+                            var endPos = text_area.selectionEnd;
+                            text_area.value = text_area.value.substring(0, startPos) + '  ' + text_area.value.substring(endPos, text_area.value.length);
+                            text_area.selectionStart = text_area.selectionEnd = startPos + 2;
+                        }
+                        e.preventDefault();
+                    }
+                }
+            }
         },
         {
             region: 'south',
