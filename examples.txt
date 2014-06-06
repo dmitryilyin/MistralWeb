@@ -252,3 +252,61 @@ Workflow:
 #    parameters:
 #      cron-pattern: "*/1 * * * *"
 
+
+Tasks
+=====
+
+Namespaces:
+  Demo:
+    actions:
+
+      install:
+        class: mirantis.task
+        base-parameters:
+          task: 'demo::apache::install'
+      page:
+        class: mirantis.task
+        base-parameters:
+          task: 'demo::hello_world_page'
+      start:
+        class: mirantis.task
+        base-parameters:
+          task: 'demo::apache::start'
+      remove:
+        class: mirantis.task
+        base-parameters:
+          task: 'demo::apache::remove'
+
+      date_file:
+        class: mirantis.cmd
+        base-parameters:
+          cmd: '/bin/date > /var/www/html/date.txt'
+
+      large_file:
+        class: mirantis.cmd
+        base-parameters:
+          cmd: '/bin/dd if=/dev/urandom of=/var/www/html/file.img bs=1M count=100'
+
+Workflow:
+  tasks:
+    install:
+      action: Demo.install
+
+    page:
+      action: Demo.page
+      requires: [install]
+
+    date_file:
+      action: Demo.date_file
+      requires: [install]
+
+    large_file:
+      action: Demo.large_file
+      requires: [install]
+
+    start:
+      action: Demo.start
+      requires: [page, date_file, large_file]
+
+    remove:
+      action: Demo.remove
